@@ -4,7 +4,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className='text-danger'>Hello World</h1>
+        <h1>React Test API By Call Ajax</h1>
       </header>
     </div>
   );
