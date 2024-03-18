@@ -1,124 +1,36 @@
-import React, { useState, useEffect } from 'react';
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-const Get_data = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+// Components
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import Home from './component/Home';
+import Marketing from './component/Marketing';
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://data.b-lost-dev.com/api-data?g=test');
-        const jsonData = await response.json();
-        setData(jsonData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      }
-    };
+// Default Timezone Asia/Bangkok
+import moment from 'moment';
+import 'moment-timezone';
+moment.tz.setDefault('Asia/Bangkok');
 
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+const App = () => {
   return (
-    <div>
-      <h1>API Data</h1>
-      {data && (
-        <ul>
-          {data.map(item => (
-            <li key={item.id}>{item.name}</li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-};
-
-const Post_data = () => {
-  const [formData, setFormData] = useState({
-    name: 'Test Name',
-    email: 'Test Email',
-    phone: 'Test Phone',
-    address: 'Test Address',
-    city: 'Test City',
-    country: 'Test Country',
-    postal_code: 'Test Postal Code',
-  });
-  const [response, setResponse] = useState(null);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    console.log('formData:', formData);
-    e.preventDefault();
-    try {
-      const response = await fetch('https://data.b-lost-dev.com/api-data?p=test', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const jsonData = await response.json();
-      setResponse(jsonData);
-    } catch (error) {
-      console.error('Error submitting data:', error);
-    }
-  };
-
-  return (
-    <div>
-      <h1>Submit Data</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} />
+    <Router>
+      <div>
+        <Navbar />
+        <div className="container-fluid">
+          <div className="row">
+            <Sidebar />
+            <main className="col-10 p-4">
+              <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route path="/marketing" element={<Marketing />} />
+              </Routes>
+            </main>
+          </div>
         </div>
-        <div>
-          <label>Email:</label>
-          <input type="test" name="email" value={formData.email} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Phone:</label>
-          <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Address:</label>
-          <input type="text" name="address" value={formData.address} onChange={handleChange} />
-        </div>
-        <div>
-          <label>City:</label>
-          <input type="text" name="city" value={formData.city} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Country:</label>
-          <input type="text" name="country" value={formData.country} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Postal Code:</label>
-          <input type="text" name="postal_code" value={formData.postal_code} onChange={handleChange} />
-        </div>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-      {response && <p>Response: {response.message}</p>}
-    </div>
-  );
-};
-
-function App() {
-  return (
-    <div>
-      <Get_data />
-      <Post_data />
-    </div>
+      </div>
+    </Router >
   );
 }
 
