@@ -6,12 +6,7 @@ const Marketing = () => {
     const [data, setData] = useState([]);
 
     // Get Hostname
-    const hostname = window.location.hostname;
-    if (hostname === 'localhost') {
-        var api_url = 'http://localhost/CSI/api-test/data-test-get'; // Localhost
-    } else {
-        var api_url = 'https://data.b-lost-dev.com/api-test/data-test-get'; // Production
-    }
+    var api_url = 'https://data.b-lost-dev.com/api/data'; // Production
 
     useEffect(() => {
         const fetchData = async () => {

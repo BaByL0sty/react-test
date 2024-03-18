@@ -35,3 +35,21 @@ const App = () => {
 }
 
 export default App;
+
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// function App() {
+//   const [data, setData] = useState([]);
+
+//   useEffect(() => {
+//     axios.get('https://data.b-lost-dev.com/api-test/data-test-get').then((data) => setData(data.data))
+//   }, []);
+
+//   console.log(data);
+
+//   return (
+//     <></>
+//   );
+// }
+
+// export default App;
